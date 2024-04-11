@@ -1,108 +1,105 @@
-/* User styles */
-@media screen and (min-width: 911px) {
-    .ant-carousel {
-        max-width: 810px;
-    }
-}
-
-@media screen and (min-width: 641px) and (max-width: 910px) {
-    .ant-carousel {
-        max-width: 540px;
-    }
-}
-
-@media screen and (max-width: 640px) {
-    .ant-carousel {
-        max-width: 270px;
-    }
-}
-
-.ant-carousel {
-    margin: 50px auto auto;
-    padding-top: 10px;
-    border: 1px solid #ccd;
-    background-color: white;
-}
-
-.ant-carousel-element {
-    width: 270px;
-    text-align: center;
-}
-
-/* General styles */
-.ant-carousel {
-    width: auto;
-    position: relative;
-}
-
-.ant-carousel-hider {
-    overflow: hidden;
-}
-
-.ant-carousel-list {
-    width: auto;
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
+.flex-carousel {
     display: flex;
-    justify-content: flex-start;
-}
-
-.ant-carousel-element {
-    display: block;
-    flex: 0 0 auto;
-}
-
-/* Navigation item styles */
-div.ant-carousel-arrow-left,
-div.ant-carousel-arrow-right {
-    width: 22px;
-    height: 40px;
-    position: absolute;
-    cursor: pointer;
-    opacity: 0.6;
-    z-index: 32;
-}
-
-div.ant-carousel-arrow-left {
-    left: -40px;
-    top: 40%;
-    display: block;
-    background: red;
-}
-
-div.ant-carousel-arrow-right {
-    right: -40px;
-    top: 40%;
-    display: block;
-    background: green;
-}
-
-div.ant-carousel-arrow-left:hover {
-    opacity: 1;
-}
-
-div.ant-carousel-arrow-right:hover {
-    opacity: 1;
-}
-
-div.ant-carousel-dots {
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
     width: 100%;
     height: auto;
-    position: absolute;
-    left: 0;
-    bottom: -30px;
-    z-index: 30;
-    text-align: center;
 }
 
-span.ant-dot {
-    width: 10px;
-    height: 10px;
-    margin: 5px 7px;
-    padding: 0;
-    display: inline-block;
-    background-color: #bbb;
-    border-radius: 5px;
-    cursor: pointer;
+.flex-item {
+    width: 33.33%;
+    height: auto;
+    margin: 10px;
+    object-fit: contain;
 }
+
+// button {
+//     appearance: none;
+//     border: 0;
+//     background: none;
+//     padding: 0;
+//     margin: 0;
+//     outline: none;
+//     font: inherit;
+//     color: inherit;
+//     cursor: pointer;
+// }
+// .carousel {
+//     position: relative;
+//     width: 80%;
+//     margin: 0 auto;
+
+//     overflow: hidden;
+//     color: grey;
+// }
+
+// .carousel-inner {
+//     display: flex;
+//     gap: 1vw;
+//     transition: transform 0.5s;
+// }
+
+// .carousel-item {
+//     flex: 1;
+//     text-align: center;
+// }
+
+// .carousel-item img {
+//     width: 80vw;
+//     max-height: 80vw;
+//     object-fit: cover;
+// }
+
+// .rounds {
+//     display: flex;
+//     gap: 1vw;
+//     justify-content: center;
+// }
+
+// .round {
+//     height: 10px;
+//     width: 10px;
+//     border: 1px solid red;
+//     &_active {
+//         color: red;
+//     }
+// }
+
+// .buttons {
+//     width: 100%;
+//     display: flex;
+//     justify-content: space-between;
+//     position: absolute;
+//     top: 50%;
+//     transform: translateY(-50%);
+// }
+
+// .button {
+//     display: block;
+//     height: 100px;
+//     width: 100px;
+//     background: red;
+// }
+
+// .button {
+//     min-width: 100px;
+//     font-family: inherit;
+//     appearance: none;
+//     border: 0;
+//     border-radius: 5px;
+//     background: #4676d7;
+//     color: #fff;
+//     padding: 8px 16px;
+//     font-size: 1rem;
+//     cursor: pointer;
+// }
+
+// .button:hover {
+//     background: #1d49aa;
+// }
+
+// .button:focus {
+//     outline: none;
+//     box-shadow: 0 0 0 4px #cbd6ee;
+// }

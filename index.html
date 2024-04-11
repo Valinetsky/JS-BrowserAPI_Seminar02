@@ -5,30 +5,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="/SCSS/styles.css" />
         <title>JS-BrowserAPI_Seminar02</title>
-        <!-- <script src="lection.js" defer></script> -->
         <script type="module" src="homework.js" defer></script>
     </head>
     <body>
-        <div class="ant-carousel">
-            <div class="ant-carousel-hider">
-                <div class="ant-carousel-list">
-                    <div class="ant-carousel-element">
-                        <img src="img/01.jpg" alt="1" />
-                        <p>Описание 1</p>
-                    </div>
-                    <div class="ant-carousel-element">
-                        <img src="img/02.jpg" alt="2" />
-                        <p>Описание 2</p>
-                    </div>
-                    <div class="ant-carousel-element">
-                        <img src="img/03.jpg" alt="3" />
-                        <p>Описание 3</p>
-                    </div>
+        <div class="carousel center">
+            <div class="flex-carousel">
+                <div class="flex-item">
+                    <img src="/img/01.jpg" alt="Image 1" />
+                </div>
+                <div class="flex-item">
+                    <img src="/img/02.jpg" alt="Image 2" />
+                </div>
+                <div class="flex-item">
+                    <img src="/img/04.jpg" alt="Image 3" />
                 </div>
             </div>
-            <div class="ant-carousel-arrow-left"></div>
-            <div class="ant-carousel-arrow-right"></div>
-            <div class="ant-carousel-dots"></div>
+            <div class="buttons">
+                <button class="button prev-btn">Left</button>
+                <button class="button next-btn">Right</button>
+                <button class="prev-btn">Предыдущая</button>
+                <button class="next-btn">Следующая</button>
+            </div>
+            <div class="rounds">
+                <div class="round"></div>
+                <div class="round"></div>
+                <div class="round"></div>
+            </div>
         </div>
     </body>
 </html>
