@@ -11,12 +11,32 @@ carousel.addEventListener("click", function (event) {
 });
 
 function moveRight() {
-    const elementWidht = getElementWidht;
+    const elementWidht = getElementWidht();
 
     console.log(elementWidht);
     const carouselFlex = getCarouselFlex();
-    console.log(carouselFlex);
-    carouselFlex.style.transform = `translate(${elementWidht}px,0)`;
+    console.log(carouselFlex.style);
+    // carouselFlex.style.transform = `translateX(${elementWidht}px,0)`;
+    // console.log(carouselFlex.style);
+    const string = `translateX(${elementWidht}px)`;
+    console.log(string);
+    const animation = carouselFlex.animate(
+        [{ transform: "translateX(0)" }, { transform: string }],
+        1000
+    );
+    animation.addEventListener("finish", function () {
+        carouselFlex.style.transform = string;
+        carouselFlex.classList.add("fl_end");
+        const newDiv = `
+		<div class="carousel__element">
+            <img src="img/08.jpg" alt="3" />
+            <p>Описание 3</p>
+        </div>
+		`;
+        const lastChild = carouselFlex.lastChild;
+        const firstP = carouselFlex.innerHTML - lastChild;
+        carouselFlex.innerHTML = newDiv + firstP;
+    });
 }
 
 function getElementWidht() {

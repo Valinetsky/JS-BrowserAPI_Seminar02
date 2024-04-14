@@ -24,11 +24,11 @@
 
 .carousel {
     position: relative;
-    &__main {
-    }
     &__item {
         display: flex;
+        align-items: flex-start;
         gap: 1vw;
+        transform: translateX(0);
     }
     &__element {
         background-color: aqua;
@@ -82,6 +82,14 @@
         outline: none;
         box-shadow: 0 0 0 4px #cbd6ee;
     }
+}
+
+fl_start {
+    align-items: flex-start;
+}
+
+fl_end {
+    align-items: flex-end;
 }
 
 // .ant-carousel {

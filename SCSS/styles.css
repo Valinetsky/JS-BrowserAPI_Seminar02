@@ -10,7 +10,9 @@
 }
 .carousel__item {
   display: flex;
+  align-items: flex-start;
   gap: 1vw;
+  transform: translateX(0);
 }
 .carousel__element {
   background-color: aqua;
@@ -66,4 +68,12 @@
 .btn:focus {
   outline: none;
   box-shadow: 0 0 0 4px #cbd6ee;
+}
+
+fl_start {
+  align-items: flex-start;
+}
+
+fl_end {
+  align-items: flex-end;
 }/*# sourceMappingURL=styles.css.map */
