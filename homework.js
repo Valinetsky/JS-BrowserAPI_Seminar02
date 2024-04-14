@@ -36,8 +36,8 @@ function moveRight() {
 		`;
         carouselFlex.removeChild(carouselFlex.lastElementChild);
         const firstP = carouselFlex.innerHTML;
-        carouselFlex.innerHTML = newDiv + firstP;
         carouselFlex.style.transform = "translateX(0)";
+        carouselFlex.innerHTML = newDiv + firstP;
     });
 }
 
