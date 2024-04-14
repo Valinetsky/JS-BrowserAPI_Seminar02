@@ -1,4 +1,5 @@
 "use strict";
+const maxElement = 8;
 const carousel = document.querySelector(".carousel__buttons");
 carousel.addEventListener("click", function (event) {
     if (event.target.classList.contains("btn_left")) {
@@ -12,35 +13,37 @@ carousel.addEventListener("click", function (event) {
 
 function moveRight() {
     const elementWidht = getElementWidht();
-
-    console.log(elementWidht);
     const carouselFlex = getCarouselFlex();
-    console.log(carouselFlex.style);
-    // carouselFlex.style.transform = `translateX(${elementWidht}px,0)`;
-    // console.log(carouselFlex.style);
     const string = `translateX(${elementWidht}px)`;
     console.log(string);
     const animation = carouselFlex.animate(
         [{ transform: "translateX(0)" }, { transform: string }],
-        1000
+        500
     );
     animation.addEventListener("finish", function () {
         carouselFlex.style.transform = string;
-        carouselFlex.classList.add("fl_end");
+        let newElement =
+            carouselFlex.firstElementChild.getAttribute("data-index") - 1;
+        console.log(newElement);
+        if (newElement < 1) {
+            newElement = maxElement;
+        }
         const newDiv = `
-		<div class="carousel__element">
-            <img src="img/08.jpg" alt="3" />
-            <p>Описание 3</p>
+		<div class="carousel__element" data-index="${newElement}">
+            <img src="img/0${newElement}.jpg" alt="${newElement}" />
+            <p>Описание ${newElement}</p>
         </div>
 		`;
-        const lastChild = carouselFlex.lastChild;
-        const firstP = carouselFlex.innerHTML - lastChild;
+        carouselFlex.removeChild(carouselFlex.lastElementChild);
+        const firstP = carouselFlex.innerHTML;
         carouselFlex.innerHTML = newDiv + firstP;
+        carouselFlex.style.transform = "translateX(0)";
     });
 }
 
 function getElementWidht() {
-    return document.querySelector(".carousel__element").offsetWidth;
+    return document.querySelector(".carousel__element").getBoundingClientRect()
+        .width;
 }
 function getCarouselFlex() {
     return document.querySelector(".carousel__item");

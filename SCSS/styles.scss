@@ -24,7 +24,13 @@
 
 .carousel {
     position: relative;
+    &__main {
+        overflow: hidden;
+    }
     &__item {
+        position: absolute;
+        width: 300vw;
+        left: -33.333333%;
         display: flex;
         align-items: flex-start;
         gap: 1vw;
@@ -35,7 +41,8 @@
         border: 1px solid red;
         img {
             width: 100%;
-            height: auto;
+            height: 80vh;
+            // object-fit: cover;
         }
     }
     &__buttons {
