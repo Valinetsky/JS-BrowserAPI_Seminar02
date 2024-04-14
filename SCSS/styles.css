@@ -13,12 +13,12 @@
 }
 .carousel__item {
   position: absolute;
-  width: 300vw;
-  left: -33.333333%;
+  width: 500vw;
+  left: -100%;
   display: flex;
   align-items: flex-start;
   gap: 1vw;
-  transform: translateX(0);
+  transform: translateX(0) ease-out;
 }
 .carousel__element {
   background-color: aqua;
