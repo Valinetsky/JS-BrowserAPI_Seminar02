@@ -1,53 +1,47 @@
-/* User styles */
-// @media screen and (min-width: 911px) {
-//     .ant-carousel {
-//         max-width: 810px;
-//     }
-// }
-
-// @media screen and (min-width: 641px) and (max-width: 910px) {
-//     .ant-carousel {
-//         max-width: 540px;
-//     }
-// }
-
-// @media screen and (max-width: 640px) {
-//     .ant-carousel {
-//         max-width: 270px;
-//     }
-// }
 * {
-    box-sizing: border-box;
+    // box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+html,
+body {
+    background-color: #0a1b3c;
 }
 
 .carousel {
     position: relative;
-    &__main {
-        overflow: hidden;
-    }
+    width: 80vw;
+    height: 80vh;
+    margin: 0 auto;
+    margin-top: 2vw;
+    // overflow: hidden;
+    display: flex;
+    // align-items: flex-start;
+    // gap: 1vw;
+    // transform: translateX(0) ease-out;
+    border: 1px solid white;
+    border-radius: 1vw;
     &__item {
-        position: absolute;
-        width: 300vw;
-        left: -100%;
+        height: 100%;
         display: flex;
-        align-items: flex-start;
+        justify-content: center;
         gap: 1vw;
-        transform: translateX(0) ease-out;
+        // position: relative;
+        // overflow: hidden;
     }
     &__element {
+        width: 100%;
         background-color: aqua;
         border: 1px solid red;
         img {
             width: 100%;
-            height: 80vh;
-            object-fit: cover;
+            height: auto;
+            // object-fit: cover;
         }
     }
     &__buttons {
         position: absolute;
-        top: 100%;
+        top: 50%;
         transform: translateY(-50%);
         width: 100%;
         display: flex;

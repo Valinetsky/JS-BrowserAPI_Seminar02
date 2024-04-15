@@ -1,13 +1,67 @@
 "use strict";
 const maxElement = 8;
-const carousel = document.querySelector(".carousel__buttons");
-carousel.addEventListener("click", function (event) {
+const images = [];
+for (let index = 0; index < maxElement; index++) {
+    images.push(`${index + 1}.jpg`);
+}
+console.log(images);
+
+let activeFrame = 0;
+const carousel = document.querySelector(".carousel__item");
+const carouselOffsetWidth = document.querySelector(".carousel").clientWidth;
+const carouselOffsetHeight = document.querySelector(".carousel").clientHeight;
+console.log(carouselOffsetWidth);
+carousel.style.width = 3 * carouselOffsetWidth + "px";
+carousel.style.height = carouselOffsetHeight + "px";
+carousel.style.left = `-${carouselOffsetWidth}px`;
+let flag = true;
+
+const frameModulo = (direction) =>
+    (((activeFrame + direction) % maxElement) + maxElement) % maxElement;
+
+const getFrame = (direction) => {
+    const currentFrame = frameModulo(direction);
+    console.log(currentFrame);
+
+    const img = document.createElement("img");
+    img.alt = "";
+    img.src = "./img/" + images[currentFrame];
+    console.log(img);
+    const divElement = document.createElement("div");
+    divElement.className = "carousel__element";
+    divElement.appendChild(img);
+    return divElement;
+};
+
+const initCarousel = () => {
+    carousel.append(getFrame(0));
+    carousel.append(getFrame(1));
+    carousel.prepend(getFrame(-1));
+};
+
+const nextSlide = (direction) => {
+    activeFrame = frameModulo(direction);
+    if (direction === 1) {
+        document.querySelector(".carousel__item div").remove();
+        carousel.append(getFrame(direction));
+    }
+    if (direction === -1) {
+        document.querySelector(".carousel__item div:last-child").remove();
+        carousel.prepend(getFrame(direction));
+    }
+};
+
+initCarousel();
+
+const buttons = document.querySelector(".carousel__buttons");
+buttons.addEventListener("click", function (event) {
     if (event.target.classList.contains("btn_left")) {
         console.log("LEFT");
+        nextSlide(-1);
     }
     if (event.target.classList.contains("btn_right")) {
         console.log("right");
-        moveRight();
+        nextSlide(1);
     }
 });
 
