@@ -10,30 +10,27 @@ body {
 
 .carousel {
   position: relative;
-  width: 80vw;
-  height: 80vh;
+  width: 50%;
+  height: 30vh;
   margin: 0 auto;
   margin-top: 2vw;
-  display: flex;
-  border: 1px solid white;
+  border: 10px solid white;
   border-radius: 1vw;
 }
+.carousel img {
+  max-width: 500px;
+  width: 100%;
+}
 .carousel__item {
-  height: 100%;
   display: flex;
-  justify-content: center;
-  gap: 1vw;
+  position: relative;
 }
 .carousel__element {
-  width: 33%;
+  width: 50%;
   background-color: aqua;
-  border: 1px solid red;
-}
-.carousel__element img {
-  width: auto;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  border: 5px solid red;
+  border-radius: 1vw;
+  overflow: hidden;
 }
 .carousel__buttons {
   position: absolute;

@@ -11,6 +11,7 @@ const carousel = document.querySelector(".carousel__item");
 const carouselOffsetWidth = document.querySelector(".carousel").clientWidth;
 const carouselOffsetHeight = document.querySelector(".carousel").clientHeight;
 console.log(carouselOffsetWidth);
+console.log(carouselOffsetHeight);
 carousel.style.width = 3 * carouselOffsetWidth + "px";
 carousel.style.height = carouselOffsetHeight + "px";
 carousel.style.left = `-${carouselOffsetWidth}px`;
@@ -22,14 +23,13 @@ const frameModulo = (direction) =>
 const getFrame = (direction) => {
     const currentFrame = frameModulo(direction);
     console.log(currentFrame);
-
     const img = document.createElement("img");
     img.alt = "";
     img.src = "./img/" + images[currentFrame];
     console.log(img);
     const divElement = document.createElement("div");
     divElement.className = "carousel__element";
-    divElement.appendChild(img);
+    // divElement.appendChild(img);
     return divElement;
 };
 
@@ -38,43 +38,6 @@ const initCarousel = () => {
     carousel.append(getFrame(1));
     carousel.prepend(getFrame(-1));
 };
-
-const nextSlide = (direction) => {
-    activeFrame = frameModulo(direction);
-    if (direction === 1) {
-        // document.querySelector(".carousel__item div").remove();
-        carousel.append(getFrame(direction));
-        animate({
-            duration: 1000,
-            draw: function (progress) {
-                document.querySelector(".carousel__item div").style.width = `${
-                    carouselOffsetWidth * (1 - progress)
-                }px`;
-            },
-            removeElement: document
-                .querySelector(".carousel__item div")
-                .remove(),
-        });
-    }
-    if (direction === -1) {
-        document.querySelector(".carousel__item div:last-child").remove();
-        carousel.prepend(getFrame(direction));
-    }
-};
-
-initCarousel();
-
-const buttons = document.querySelector(".carousel__buttons");
-buttons.addEventListener("click", function (event) {
-    if (event.target.classList.contains("btn_left")) {
-        console.log("LEFT");
-        nextSlide(-1);
-    }
-    if (event.target.classList.contains("btn_right")) {
-        console.log("right");
-        nextSlide(1);
-    }
-});
 
 const animate = ({ duration, draw, removeElement }) => {
     const start = performance.now();
@@ -91,6 +54,54 @@ const animate = ({ duration, draw, removeElement }) => {
         }
     });
 };
+
+const nextSlide = (direction) => {
+    activeFrame = frameModulo(direction);
+    if (direction === 1) {
+        // document.querySelector(".carousel__item div").remove();
+        carousel.append(getFrame(direction));
+        animate({
+            duration: 1000,
+            draw: function (progress) {
+                console.log(progress);
+                document.querySelector(
+                    ".carousel__item div:last-child"
+                ).style.maxWidth = carouselOffsetWidth * (1 - progress) + "px";
+            },
+            removeElement: document.querySelector(
+                ".carousel__item div:last-child"
+            ),
+        });
+    }
+    if (direction === -1) {
+        // document.querySelector(".carousel__item div:last-child").remove();
+        carousel.prepend(getFrame(direction));
+        animate({
+            duration: 1000,
+            draw: function (progress) {
+                console.log(document.querySelector(".carousel__item div"));
+                document.querySelector(".carousel__item div").style.width = `${
+                    carouselOffsetWidth * (1 - progress)
+                }px`;
+            },
+            removeElement: document.querySelector(".carousel__item div"),
+        });
+    }
+};
+
+initCarousel();
+
+const buttons = document.querySelector(".carousel__buttons");
+buttons.addEventListener("click", function (event) {
+    if (event.target.classList.contains("btn_left")) {
+        console.log("LEFT");
+        nextSlide(-1);
+    }
+    if (event.target.classList.contains("btn_right")) {
+        console.log("right");
+        nextSlide(1);
+    }
+});
 
 // function moveRight() {
 //     const elementWidht = getElementWidht();
