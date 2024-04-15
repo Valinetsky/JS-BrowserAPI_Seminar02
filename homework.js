@@ -42,8 +42,19 @@ const initCarousel = () => {
 const nextSlide = (direction) => {
     activeFrame = frameModulo(direction);
     if (direction === 1) {
-        document.querySelector(".carousel__item div").remove();
+        // document.querySelector(".carousel__item div").remove();
         carousel.append(getFrame(direction));
+        animate({
+            duration: 1000,
+            draw: function (progress) {
+                document.querySelector(".carousel__item div").style.width = `${
+                    carouselOffsetWidth * (1 - progress)
+                }px`;
+            },
+            removeElement: document
+                .querySelector(".carousel__item div")
+                .remove(),
+        });
     }
     if (direction === -1) {
         document.querySelector(".carousel__item div:last-child").remove();
@@ -65,43 +76,59 @@ buttons.addEventListener("click", function (event) {
     }
 });
 
-function moveRight() {
-    const elementWidht = getElementWidht();
-    const carouselFlex = getCarouselFlex();
-    const string = `translateX(${elementWidht}px)`;
-    console.log(string);
-    const animation = carouselFlex.animate(
-        [{ transform: "translateX(0)" }, { transform: string }],
-        500
-    );
-    animation.addEventListener("finish", function () {
-        carouselFlex.style.transform = string;
-        let newElement =
-            carouselFlex.firstElementChild.getAttribute("data-index") - 1;
-        console.log(newElement);
-        if (newElement < 1) {
-            newElement = maxElement;
+const animate = ({ duration, draw, removeElement }) => {
+    const start = performance.now();
+    requestAnimationFrame(function animate(time) {
+        let step = (time - start) / duration;
+        if (step > 1) {
+            step = 1;
+            draw(step);
         }
-        const newDiv = `
-		<div class="carousel__element" data-index="${newElement}">
-            <img src="img/0${newElement}.jpg" alt="${newElement}" />
-            <p>Описание ${newElement}</p>
-        </div>
-		`;
-        carouselFlex.removeChild(carouselFlex.lastElementChild);
-        const firstP = carouselFlex.innerHTML;
-        carouselFlex.style.transform = "translateX(0)";
-        carouselFlex.innerHTML = newDiv + firstP;
+        if (step < 1) {
+            requestAnimationFrame(animate);
+        } else {
+            removeElement.remove();
+        }
     });
-}
+};
 
-function getElementWidht() {
-    return document.querySelector(".carousel__element").getBoundingClientRect()
-        .width;
-}
-function getCarouselFlex() {
-    return document.querySelector(".carousel__item");
-}
+// function moveRight() {
+//     const elementWidht = getElementWidht();
+//     const carouselFlex = getCarouselFlex();
+//     const string = `translateX(${elementWidht}px)`;
+//     console.log(string);
+//     const animation = carouselFlex.animate(
+//         [{ transform: "translateX(0)" }, { transform: string }],
+//         500
+//     );
+//     animation.addEventListener("finish", function () {
+//         carouselFlex.style.transform = string;
+//         let newElement =
+//             carouselFlex.firstElementChild.getAttribute("data-index") - 1;
+//         console.log(newElement);
+//         if (newElement < 1) {
+//             newElement = maxElement;
+//         }
+//         const newDiv = `
+// 		<div class="carousel__element" data-index="${newElement}">
+//             <img src="img/0${newElement}.jpg" alt="${newElement}" />
+//             <p>Описание ${newElement}</p>
+//         </div>
+// 		`;
+//         carouselFlex.removeChild(carouselFlex.lastElementChild);
+//         const firstP = carouselFlex.innerHTML;
+//         carouselFlex.style.transform = "translateX(0)";
+//         carouselFlex.innerHTML = newDiv + firstP;
+//     });
+// }
+
+// function getElementWidht() {
+//     return document.querySelector(".carousel__element").getBoundingClientRect()
+//         .width;
+// }
+// function getCarouselFlex() {
+//     return document.querySelector(".carousel__item");
+// }
 // function Ant(crslId) {
 //     let id = document.getElementById(crslId);
 //     if (id) {

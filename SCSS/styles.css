@@ -25,13 +25,15 @@ body {
   gap: 1vw;
 }
 .carousel__element {
-  width: 100%;
+  width: 33%;
   background-color: aqua;
   border: 1px solid red;
 }
 .carousel__element img {
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .carousel__buttons {
   position: absolute;
