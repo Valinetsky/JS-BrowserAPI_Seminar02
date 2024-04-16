@@ -14,6 +14,7 @@ console.log(carouselOffsetWidth);
 console.log(carouselOffsetHeight);
 carousel.style.width = 3 * carouselOffsetWidth + "px";
 carousel.style.height = carouselOffsetHeight + "px";
+
 carousel.style.left = `-${carouselOffsetWidth}px`;
 let flag = true;
 
@@ -23,12 +24,19 @@ const frameModulo = (direction) =>
 const getFrame = (direction) => {
     const currentFrame = frameModulo(direction);
     console.log(currentFrame);
+
     const img = document.createElement("img");
     img.alt = "";
     img.src = "./img/" + images[currentFrame];
     console.log(img);
+
     const divElement = document.createElement("div");
+    const backgroundImageString = `url(./img/${images[currentFrame]}) center/cover no-repeat`;
     divElement.className = "carousel__element";
+    divElement.style.width = carouselOffsetWidth + "px";
+    divElement.style.height = carouselOffsetHeight + "px";
+    divElement.style.background = backgroundImageString;
+
     // divElement.appendChild(img);
     return divElement;
 };
@@ -66,11 +74,9 @@ const nextSlide = (direction) => {
                 console.log(progress);
                 document.querySelector(
                     ".carousel__item div:last-child"
-                ).style.maxWidth = carouselOffsetWidth * (1 - progress) + "px";
+                ).style.width = carouselOffsetWidth * (1 - progress) + "px";
             },
-            removeElement: document.querySelector(
-                ".carousel__item div:last-child"
-            ),
+            removeElement: document.querySelector(".carousel__item div"),
         });
     }
     if (direction === -1) {
@@ -84,7 +90,9 @@ const nextSlide = (direction) => {
                     carouselOffsetWidth * (1 - progress)
                 }px`;
             },
-            removeElement: document.querySelector(".carousel__item div"),
+            removeElement: document.querySelector(
+                ".carousel__item div:last-child"
+            ),
         });
     }
 };
