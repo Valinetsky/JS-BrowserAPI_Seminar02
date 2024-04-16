@@ -18,12 +18,9 @@ body {
   border: 1px solid white;
   border-radius: 1vw;
 }
-.carousel img {
-  max-width: 500px;
-  width: 100%;
-}
 .carousel__item {
   display: flex;
+  gap: 10vw;
   position: relative;
 }
 .carousel__element {

@@ -12,7 +12,7 @@ const carouselOffsetWidth = document.querySelector(".carousel").clientWidth;
 const carouselOffsetHeight = document.querySelector(".carousel").clientHeight;
 console.log(carouselOffsetWidth);
 console.log(carouselOffsetHeight);
-carousel.style.width = 5 * carouselOffsetWidth + "px";
+carousel.style.width = 3 * carouselOffsetWidth + "px";
 carousel.style.height = carouselOffsetHeight + "px";
 
 carousel.style.left = `-${carouselOffsetWidth}px`;
@@ -64,9 +64,9 @@ function animate({ timing, draw, duration, removeElement }) {
 const nextSlide = (direction) => {
     activeFrame = frameModulo(direction);
     if (direction === 1) {
+        carousel.style.alignItems = "flex-end";
         carousel.append(getFrame(direction));
         const currentDiv = document.querySelector(".carousel__item div");
-
         animate({
             duration: 500,
             timing: function (timeFraction) {
@@ -80,10 +80,12 @@ const nextSlide = (direction) => {
         });
     }
     if (direction === -1) {
+        carousel.style.alignItems = "flex-start";
         carousel.prepend(getFrame(direction));
         const currentDiv = document.querySelector(
             ".carousel__item div:last-child"
         );
+
         animate({
             duration: 500,
             timing: function (timeFraction) {
