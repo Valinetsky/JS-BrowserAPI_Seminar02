@@ -12,7 +12,7 @@ const carouselOffsetWidth = document.querySelector(".carousel").clientWidth;
 const carouselOffsetHeight = document.querySelector(".carousel").clientHeight;
 console.log(carouselOffsetWidth);
 console.log(carouselOffsetHeight);
-carousel.style.width = 3 * carouselOffsetWidth + "px";
+carousel.style.width = 5 * carouselOffsetWidth + "px";
 carousel.style.height = carouselOffsetHeight + "px";
 
 carousel.style.left = `-${carouselOffsetWidth}px`;
@@ -23,13 +23,6 @@ const frameModulo = (direction) =>
 
 const getFrame = (direction) => {
     const currentFrame = frameModulo(direction);
-    console.log(currentFrame);
-
-    // const img = document.createElement("img");
-    // img.alt = "";
-    // img.src = "./img/" + images[currentFrame];
-    // console.log(img);
-
     const divElement = document.createElement("div");
     const backgroundImageString = `url(./img/${images[currentFrame]}) center/cover no-repeat`;
     divElement.className = "carousel__element";
@@ -47,62 +40,60 @@ const initCarousel = () => {
     carousel.prepend(getFrame(-1));
 };
 
-const animate = ({ duration, draw, removeElement }) => {
-    const start = performance.now();
+function animate({ timing, draw, duration, removeElement }) {
+    let start = performance.now();
+
     requestAnimationFrame(function animate(time) {
-        let step = (time - start) / duration;
-        if (step > 1) {
-            step = 1;
-            draw(step);
-        }
-        if (step < 1) {
+        // timeFraction изменяется от 0 до 1
+        let timeFraction = (time - start) / duration;
+        if (timeFraction > 1) timeFraction = 1;
+
+        // вычисление текущего состояния анимации
+        let progress = timing(timeFraction);
+
+        draw(progress); // отрисовать её
+
+        if (timeFraction < 1) {
             requestAnimationFrame(animate);
         } else {
             removeElement.remove();
         }
     });
-};
+}
 
 const nextSlide = (direction) => {
     activeFrame = frameModulo(direction);
     if (direction === 1) {
-        // document.querySelector(".carousel__item div").remove();
         carousel.append(getFrame(direction));
-        console.log(document.querySelector(".carousel__item div"));
-        const currentWidth = document.querySelector(".carousel__item div").style
-            .width;
-        console.log(currentWidth);
-        for (let index = currentWidth; index > 0; index--) {
-            document.querySelector(".carousel__item div").style.width -= 1;
-            console.log(index);
-        }
-        // animate({
-        //     duration: 1000,
-        //     draw: function (progress) {
-        //         console.log(progress);
-        //         console.log(document.querySelector(".carousel__item div"));
-        //         document.querySelector(".carousel__item div").style.width =
-        //             carouselOffsetWidth * (1 - progress) + "px";
-        //     },
-        //     removeElement: document.querySelector(".carousel__item div"),
-        // });
+        const currentDiv = document.querySelector(".carousel__item div");
+
+        animate({
+            duration: 500,
+            timing: function (timeFraction) {
+                return timeFraction;
+            },
+            draw: function (progress) {
+                currentDiv.style.width =
+                    carouselOffsetWidth * (1 - progress) + "px";
+            },
+            removeElement: currentDiv,
+        });
     }
     if (direction === -1) {
-        // document.querySelector(".carousel__item div:last-child").remove();
         carousel.prepend(getFrame(direction));
+        const currentDiv = document.querySelector(
+            ".carousel__item div:last-child"
+        );
         animate({
-            duration: 1000,
-            draw: function (progress) {
-                console.log(
-                    document.querySelector(".carousel__item div:last-child")
-                );
-                document.querySelector(
-                    ".carousel__item div:last-child"
-                ).style.width = `${carouselOffsetWidth * (1 - progress)}px`;
+            duration: 500,
+            timing: function (timeFraction) {
+                return timeFraction;
             },
-            removeElement: document.querySelector(
-                ".carousel__item div:last-child"
-            ),
+            draw: function (progress) {
+                currentDiv.style.width =
+                    carouselOffsetWidth * (1 - progress) + "px";
+            },
+            removeElement: currentDiv,
         });
     }
 };

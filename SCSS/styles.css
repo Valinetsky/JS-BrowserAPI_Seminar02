@@ -24,13 +24,11 @@ body {
 }
 .carousel__item {
   display: flex;
-  flex-wrap: wrap;
   position: relative;
 }
 .carousel__element {
   width: 30vw;
   height: 40vh;
-  border: 5px solid red;
   border-radius: 1vw;
 }
 .carousel__buttons {
