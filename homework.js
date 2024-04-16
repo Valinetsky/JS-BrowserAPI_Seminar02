@@ -25,10 +25,10 @@ const getFrame = (direction) => {
     const currentFrame = frameModulo(direction);
     console.log(currentFrame);
 
-    const img = document.createElement("img");
-    img.alt = "";
-    img.src = "./img/" + images[currentFrame];
-    console.log(img);
+    // const img = document.createElement("img");
+    // img.alt = "";
+    // img.src = "./img/" + images[currentFrame];
+    // console.log(img);
 
     const divElement = document.createElement("div");
     const backgroundImageString = `url(./img/${images[currentFrame]}) center/cover no-repeat`;
@@ -68,16 +68,24 @@ const nextSlide = (direction) => {
     if (direction === 1) {
         // document.querySelector(".carousel__item div").remove();
         carousel.append(getFrame(direction));
-        animate({
-            duration: 1000,
-            draw: function (progress) {
-                console.log(progress);
-                document.querySelector(
-                    ".carousel__item div:last-child"
-                ).style.width = carouselOffsetWidth * (1 - progress) + "px";
-            },
-            removeElement: document.querySelector(".carousel__item div"),
-        });
+        console.log(document.querySelector(".carousel__item div"));
+        const currentWidth = document.querySelector(".carousel__item div").style
+            .width;
+        console.log(currentWidth);
+        for (let index = currentWidth; index > 0; index--) {
+            document.querySelector(".carousel__item div").style.width -= 1;
+            console.log(index);
+        }
+        // animate({
+        //     duration: 1000,
+        //     draw: function (progress) {
+        //         console.log(progress);
+        //         console.log(document.querySelector(".carousel__item div"));
+        //         document.querySelector(".carousel__item div").style.width =
+        //             carouselOffsetWidth * (1 - progress) + "px";
+        //     },
+        //     removeElement: document.querySelector(".carousel__item div"),
+        // });
     }
     if (direction === -1) {
         // document.querySelector(".carousel__item div:last-child").remove();
@@ -85,10 +93,12 @@ const nextSlide = (direction) => {
         animate({
             duration: 1000,
             draw: function (progress) {
-                console.log(document.querySelector(".carousel__item div"));
-                document.querySelector(".carousel__item div").style.width = `${
-                    carouselOffsetWidth * (1 - progress)
-                }px`;
+                console.log(
+                    document.querySelector(".carousel__item div:last-child")
+                );
+                document.querySelector(
+                    ".carousel__item div:last-child"
+                ).style.width = `${carouselOffsetWidth * (1 - progress)}px`;
             },
             removeElement: document.querySelector(
                 ".carousel__item div:last-child"

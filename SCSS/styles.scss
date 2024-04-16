@@ -14,7 +14,7 @@ body {
     height: 40vh;
     margin: 0 auto;
     margin-top: 2vw;
-    border: 10px solid white;
+    border: 1px solid white;
     border-radius: 1vw;
     img {
         // object-fit: cover;
@@ -23,12 +23,14 @@ body {
     }
     &__item {
         display: flex;
+        flex-wrap: wrap;
 
         position: relative;
+        // overflow: hidden;
     }
     &__element {
-        // width: 30vw;
-        // height: 40vh;
+        width: 30vw;
+        height: 40vh;
         // background: url(./img/1.jpg) center/cover no-repeat;
         border: 5px solid red;
         border-radius: 1vw;
