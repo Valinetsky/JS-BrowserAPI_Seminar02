@@ -82,7 +82,7 @@ const nextSlide = (direction) => {
                 return timeFraction;
             },
             draw: function (progress) {
-                currentDiv.style.width = localGap * (1 - progress) + "px";
+                carouselOffsetWidth * (1 - progress) + "px";
             },
             removeElement: currentDiv,
         });

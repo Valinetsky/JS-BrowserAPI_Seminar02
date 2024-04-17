@@ -9,7 +9,7 @@ body {
 }
 
 .carousel {
-  width: 50vw;
+  width: 10vw;
   height: 40vh;
   margin: 0 auto;
   margin-top: 2vw;
@@ -23,7 +23,6 @@ body {
   position: relative;
 }
 .carousel__element {
-  height: 40vh;
   border: 1px solid white;
   border-radius: 1vw;
   flex-shrink: 0;
