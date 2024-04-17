@@ -7,15 +7,16 @@ for (let index = 0; index < maxElement; index++) {
 console.log(images);
 
 let activeFrame = 0;
+const carouselWindow = document.querySelector(".carousel");
 const carousel = document.querySelector(".carousel__item");
-const carouselOffsetWidth = document.querySelector(".carousel").clientWidth;
-const carouselOffsetHeight = document.querySelector(".carousel").clientHeight;
+const carouselOffsetWidth = carouselWindow.clientWidth;
+const carouselOffsetHeight = carouselWindow.clientHeight;
 console.log(carouselOffsetWidth);
 console.log(carouselOffsetHeight);
 carousel.style.width = 3 * carouselOffsetWidth + "px";
 carousel.style.height = carouselOffsetHeight + "px";
 
-carousel.style.left = `-${carouselOffsetWidth}px`;
+// carousel.style.left = `-${carouselOffsetWidth}px`;
 let flag = true;
 
 const frameModulo = (direction) =>
@@ -37,7 +38,9 @@ const getFrame = (direction) => {
 const initCarousel = () => {
     carousel.append(getFrame(0));
     carousel.append(getFrame(1));
+    // carousel.append(getFrame(2));
     carousel.prepend(getFrame(-1));
+    // carousel.prepend(getFrame(-2));
 };
 
 function animate({ timing, draw, duration, removeElement }) {
@@ -64,30 +67,35 @@ function animate({ timing, draw, duration, removeElement }) {
 const nextSlide = (direction) => {
     activeFrame = frameModulo(direction);
     if (direction === 1) {
-        carousel.style.alignItems = "flex-end";
+        carousel.style.justifyContent = "flex-start";
         carousel.append(getFrame(direction));
         const currentDiv = document.querySelector(".carousel__item div");
+
+        const localGap =
+            (carousel.clientWidth - currentDiv.offsetWidth * 3) / 2;
+        console.log(localGap);
+        console.log(carousel.clientWidth);
+        console.log(currentDiv.offsetWidth);
         animate({
-            duration: 500,
+            duration: 2000,
             timing: function (timeFraction) {
                 return timeFraction;
             },
             draw: function (progress) {
-                currentDiv.style.width =
-                    carouselOffsetWidth * (1 - progress) + "px";
+                currentDiv.style.width = localGap * (1 - progress) + "px";
             },
             removeElement: currentDiv,
         });
     }
     if (direction === -1) {
-        carousel.style.alignItems = "flex-start";
+        carousel.style.justifyContent = "flex-end";
         carousel.prepend(getFrame(direction));
         const currentDiv = document.querySelector(
             ".carousel__item div:last-child"
         );
 
         animate({
-            duration: 500,
+            duration: 2000,
             timing: function (timeFraction) {
                 return timeFraction;
             },

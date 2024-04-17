@@ -1,5 +1,4 @@
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
@@ -10,13 +9,13 @@ body {
 }
 
 .carousel {
-  position: relative;
-  width: 30vw;
+  width: 50vw;
   height: 40vh;
   margin: 0 auto;
   margin-top: 2vw;
-  border: 1px solid white;
   border-radius: 1vw;
+  display: flex;
+  justify-content: center;
 }
 .carousel__item {
   display: flex;
@@ -24,9 +23,10 @@ body {
   position: relative;
 }
 .carousel__element {
-  width: 30vw;
   height: 40vh;
+  border: 1px solid white;
   border-radius: 1vw;
+  flex-shrink: 0;
 }
 .carousel__buttons {
   position: absolute;

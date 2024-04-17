@@ -1,5 +1,5 @@
 * {
-    box-sizing: border-box;
+    // box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
@@ -9,18 +9,17 @@ body {
 }
 
 .carousel {
-    position: relative;
-    width: 30vw;
+    // position: relative;
+    width: 50vw;
     height: 40vh;
     margin: 0 auto;
     margin-top: 2vw;
-    border: 1px solid white;
+    // border: 5px solid white;
     border-radius: 1vw;
-    // img {
-    //     // object-fit: cover;
-    //     max-width: 500px;
-    //     width: 100%;
-    // }
+    // overflow: hidden;
+    display: flex;
+    justify-content: center;
+    // align-items: center;
     &__item {
         display: flex;
         gap: 10vw;
@@ -29,14 +28,16 @@ body {
 
         position: relative;
         // overflow: hidden;
+        // border: 5px solid red;
     }
     &__element {
-        width: 30vw;
+        // width: 80vw;
         height: 40vh;
         // background: url(./img/1.jpg) center/cover no-repeat;
-        // border: 5px solid red;
+        border: 1px solid white;
         border-radius: 1vw;
         // overflow: hidden;
+        flex-shrink: 0;
     }
     &__buttons {
         position: absolute;
