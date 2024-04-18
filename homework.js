@@ -11,6 +11,11 @@ const carouselWindow = document.querySelector(".carousel");
 const carousel = document.querySelector(".carousel__item");
 const carouselOffsetWidth = carouselWindow.clientWidth;
 const carouselOffsetHeight = carouselWindow.clientHeight;
+const columnsGap = parseFloat(
+    window.getComputedStyle(carousel).getPropertyValue("grid-column-gap")
+);
+const frameWidth = (carouselOffsetWidth * 3 - columnsGap * 2) / 3;
+console.log(`columnGap = ${columnsGap}`);
 console.log(carouselOffsetWidth);
 console.log(carouselOffsetHeight);
 carousel.style.width = 3 * carouselOffsetWidth + "px";
@@ -27,7 +32,11 @@ const getFrame = (direction) => {
     const divElement = document.createElement("div");
     const backgroundImageString = `url(./img/${images[currentFrame]}) center/cover no-repeat`;
     divElement.className = "carousel__element";
-    divElement.style.width = carouselOffsetWidth + "px";
+    console.log(`columnGap = ${columnsGap}`);
+    console.log(
+        `carousel.style.width = ${parseFloat(carousel.offsetWidth) / 3}`
+    );
+    divElement.style.width = frameWidth + "px";
     divElement.style.height = carouselOffsetHeight + "px";
     divElement.style.background = backgroundImageString;
 
@@ -66,46 +75,39 @@ function animate({ timing, draw, duration, removeElement }) {
 
 const nextSlide = (direction) => {
     activeFrame = frameModulo(direction);
+    let currentDiv;
+
+    console.log(columnsGap);
     if (direction === 1) {
         carousel.style.justifyContent = "flex-start";
         carousel.append(getFrame(direction));
-        const currentDiv = document.querySelector(".carousel__item div");
-
-        const localGap =
-            (carousel.clientWidth - currentDiv.offsetWidth * 3) / 2;
-        console.log(localGap);
-        console.log(carousel.clientWidth);
-        console.log(currentDiv.offsetWidth);
-        animate({
-            duration: 2000,
-            timing: function (timeFraction) {
-                return timeFraction;
-            },
-            draw: function (progress) {
-                carouselOffsetWidth * (1 - progress) + "px";
-            },
-            removeElement: currentDiv,
-        });
+        currentDiv = document.querySelector(".carousel__item div");
     }
     if (direction === -1) {
         carousel.style.justifyContent = "flex-end";
         carousel.prepend(getFrame(direction));
-        const currentDiv = document.querySelector(
-            ".carousel__item div:last-child"
-        );
-
-        animate({
-            duration: 2000,
-            timing: function (timeFraction) {
-                return timeFraction;
-            },
-            draw: function (progress) {
-                currentDiv.style.width =
-                    carouselOffsetWidth * (1 - progress) + "px";
-            },
-            removeElement: currentDiv,
-        });
+        currentDiv = document.querySelector(".carousel__item div:last-child");
     }
+    animate({
+        duration: 1000,
+        timing: function (timeFraction) {
+            return timeFraction;
+        },
+        draw: function (progress) {
+            console.log(carousel.children);
+            Array.from(carousel).forEach(function (el) {
+                //implement function operations
+                el.style.position = "relative";
+                el.style.transform = `translateX(${
+                    (frameWidth + columnsGap) * (1 - progress)
+                }px)`;
+            });
+
+            // currentDiv.style.width =
+            //     (carouselOffsetWidth + columnsGap) * (1 - progress) + "px";
+        },
+        removeElement: currentDiv,
+    });
 };
 
 initCarousel();
