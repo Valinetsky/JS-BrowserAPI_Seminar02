@@ -95,9 +95,10 @@ const nextSlide = (direction) => {
         },
         draw: function (progress) {
             console.log(carousel.children);
+            console.log(progress);
             Array.from(carousel).forEach(function (el) {
                 //implement function operations
-                el.style.position = "relative";
+
                 el.style.transform = `translateX(${
                     (frameWidth + columnsGap) * (1 - progress)
                 }px)`;
