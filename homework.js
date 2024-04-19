@@ -1,21 +1,34 @@
 "use strict";
 const maxElement = 8;
 const images = [];
-for (let index = 0; index < maxElement; index++) {
-    images.push(`${index + 1}.jpg`);
-}
-console.log(images);
+
+const dotsFrame = document.querySelector(".slider__dots");
+
+const dot = (position) => {
+    const element = document.createElement("div");
+    element.className = "dot";
+    element.setAttribute("data-pos", position);
+    return element;
+};
 
 let activeFrame = 0;
+
+const frameModulo = (direction) =>
+    (((activeFrame + direction) % maxElement) + maxElement) % maxElement;
+
+for (let index = 0; index < maxElement; index++) {
+    images.push(`${index + 1}.jpg`);
+    dotsFrame.appendChild(
+        // Start here
+        dot(frameModulo(index + 1 + (maxElement - (maxElement % 2)) / 2))
+    );
+}
 
 const frames = 3;
 
 let flag = true;
 
 const slider = document.querySelector(".slider");
-
-const frameModulo = (direction) =>
-    (((activeFrame + direction) % maxElement) + maxElement) % maxElement;
 
 const getFrame = (direction) => {
     const currentFrame = frameModulo(direction);
@@ -64,52 +77,30 @@ function animate({ timing, draw, duration, removeElement }) {
 
 const nextSlide = (direction) => {
     activeFrame = frameModulo(direction);
+    const frameWidth = slider.offsetWidth / frames;
+    let currentDiv;
 
     if (direction === 1) {
         slider.style.justifyContent = "flex-start";
-        console.log(`slider before ${slider}`);
         slider.append(getFrame(direction));
-        console.log(`slider after ${slider}`);
-
-        const currentDiv = slider.firstChild;
-        const frameWidth = slider.offsetWidth / frames;
-
-        animate({
-            duration: 1000,
-            timing: function (timeFraction) {
-                return timeFraction;
-            },
-            draw: function (progress) {
-                // console.log(currentDiv);
-                currentDiv.style.width = frameWidth * (1 - progress) + "px";
-            },
-            removeElement: currentDiv,
-        });
+        currentDiv = slider.firstChild;
     }
     if (direction === -1) {
         slider.style.justifyContent = "flex-end";
-        console.log(`slider before ${slider}`);
         slider.prepend(getFrame(direction));
-        console.log(`slider after ${slider}`);
-        const currentDiv = slider.lastElementChild;
-        console.log(currentDiv);
-        const frameWidth = slider.offsetWidth / frames;
-
-        animate({
-            duration: 1000,
-            timing: function (timeFraction) {
-                return timeFraction;
-            },
-            draw: function (progress) {
-                currentDiv.style.width = frameWidth * (1 - progress) + "px";
-            },
-            removeElement: currentDiv,
-        });
+        currentDiv = slider.lastElementChild;
     }
-    // slider.style.justifyContent = "center";
+    animate({
+        duration: 1000,
+        timing: function (timeFraction) {
+            return timeFraction;
+        },
+        draw: function (progress) {
+            currentDiv.style.width = frameWidth * (1 - progress) + "px";
+        },
+        removeElement: currentDiv,
+    });
 };
-
-initSlider();
 
 const buttons = document.querySelector(".slider__buttons");
 buttons.addEventListener("click", function (event) {
@@ -122,3 +113,5 @@ buttons.addEventListener("click", function (event) {
         nextSlide(1);
     }
 });
+
+initSlider();
