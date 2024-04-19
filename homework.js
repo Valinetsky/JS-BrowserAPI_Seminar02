@@ -1,4 +1,5 @@
 "use strict";
+const timeStep = 100;
 const maxElement = 8;
 const images = [];
 
@@ -20,7 +21,7 @@ for (let index = 0; index < maxElement; index++) {
     images.push(`${index + 1}.jpg`);
     dotsFrame.appendChild(
         // Start here
-        dot(frameModulo(index + 1 + (maxElement - (maxElement % 2)) / 2))
+        dot(frameModulo(index - (maxElement - (maxElement % 2)) / 2) + 1)
     );
 }
 
@@ -91,7 +92,7 @@ const nextSlide = (direction) => {
         currentDiv = slider.lastElementChild;
     }
     animate({
-        duration: 1000,
+        duration: timeStep,
         timing: function (timeFraction) {
             return timeFraction;
         },
