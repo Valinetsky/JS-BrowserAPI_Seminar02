@@ -1,5 +1,5 @@
 "use strict";
-const timeStep = 100;
+const timeStep = 2000;
 const maxElement = 8;
 const images = [];
 
