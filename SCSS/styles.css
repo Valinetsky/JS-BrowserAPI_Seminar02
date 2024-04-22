@@ -91,6 +91,7 @@ body:before {
   padding: 1vw;
   height: 100%;
   width: 33.3333333%;
+  border: 1px solid greenyellow;
 }
 .slider__buttons {
   padding: 0 1vw;

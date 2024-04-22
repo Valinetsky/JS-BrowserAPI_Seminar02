@@ -1,5 +1,5 @@
 "use strict";
-const timeStep = 2000;
+const timeStep = 1000;
 const maxElement = 8;
 const images = [];
 
@@ -9,6 +9,7 @@ const dot = (position) => {
     const element = document.createElement("div");
     element.className = "dot";
     element.setAttribute("data-pos", position);
+
     return element;
 };
 
@@ -17,13 +18,16 @@ let activeFrame = 0;
 const frameModulo = (direction) =>
     (((activeFrame + direction) % maxElement) + maxElement) % maxElement;
 
-for (let index = 0; index < maxElement; index++) {
-    images.push(`${index + 1}.jpg`);
-    dotsFrame.appendChild(
-        // Start here
-        dot(frameModulo(index - (maxElement - (maxElement % 2)) / 2) + 1)
-    );
-}
+const arrayAndDotsGenerate = () => {
+    for (let index = 0; index < maxElement; index++) {
+        images.push(`${index + 1}.jpg`);
+        dotsFrame.appendChild(
+            dot(frameModulo(index - (maxElement - (maxElement % 2)) / 2) + 1)
+        );
+    }
+};
+
+arrayAndDotsGenerate();
 
 const frames = 3;
 
@@ -33,19 +37,13 @@ const slider = document.querySelector(".slider");
 
 const getFrame = (direction) => {
     const currentFrame = frameModulo(direction);
-
     const sliderFrame = document.createElement("div");
     sliderFrame.className = "slider__frame";
-
     const imageFrame = document.createElement("div");
     const backgroundImageString = `url(./img/${images[currentFrame]}) center/cover no-repeat`;
     imageFrame.className = "frame";
-
     imageFrame.style.background = backgroundImageString;
-    console.log(imageFrame);
-
     sliderFrame.appendChild(imageFrame);
-    console.log(sliderFrame);
     return sliderFrame;
 };
 
@@ -116,3 +114,25 @@ buttons.addEventListener("click", function (event) {
 });
 
 initSlider();
+
+// ---------------------------------------------------------
+// let dots = 4;
+// let sliderElem = document.querySelector(".slider");
+// let dotElems = sliderElem.querySelectorAll(".slider__dot");
+// let indicatorElem = sliderElem.querySelector(".slider__indicator");
+
+// Array.prototype.forEach.call(dotElems, (dotElem) => {
+//     dotElem.addEventListener("click", (e) => {
+//         let currentPos = parseInt(sliderElem.getAttribute("data-pos"));
+//         let newPos = parseInt(dotElem.getAttribute("data-pos"));
+
+//         let newDirection = newPos > currentPos ? "right" : "left";
+//         let currentDirection = newPos < currentPos ? "right" : "left";
+
+//         indicatorElem.classList.remove(
+//             `slider__indicator--${currentDirection}`
+//         );
+//         indicatorElem.classList.add(`slider__indicator--${newDirection}`);
+//         sliderElem.setAttribute("data-pos", newPos);
+//     });
+// });
