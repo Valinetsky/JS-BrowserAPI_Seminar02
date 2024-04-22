@@ -141,6 +141,9 @@ body {
         background-color: red;
     }
     cursor: pointer;
+    &_active {
+        color: red;
+    }
 }
 
 .btn {

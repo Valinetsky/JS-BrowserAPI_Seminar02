@@ -1,5 +1,6 @@
 "use strict";
-const timeStep = 1000;
+const timeStep = 2000;
+const animationDelay = 500;
 const maxElement = 8;
 const middleDot = parseInt(maxElement / 2);
 const images = [];
@@ -77,7 +78,6 @@ function animate({ timing, draw, duration, removeElement }) {
 }
 
 const nextSlide = (direction) => {
-    // Start here
     if (!flag) {
         return;
     }
@@ -96,6 +96,7 @@ const nextSlide = (direction) => {
         slider.prepend(getFrame(direction));
         currentDiv = slider.lastElementChild;
     }
+
     animate({
         duration: timeStep,
         timing: function (timeFraction) {
@@ -121,6 +122,7 @@ buttons.addEventListener("click", function (event) {
 });
 
 const dotsContainer = document.querySelector(".slider__dots");
+
 dotsContainer.addEventListener("click", function (event) {
     if (event.target.hasAttribute("data-pos")) {
         const currentDot = parseInt(event.target.getAttribute("data-pos"));
@@ -139,37 +141,18 @@ dotsContainer.addEventListener("click", function (event) {
             } else {
                 direction = 1;
             }
-            for (let index = 0; index < dotsSteps; index++) {
-                addEventListener("finish", (animate) => {
-                    console.log(`Step = ${index}`);
-                    nextSlide(direction);
-                });
-                // onfinish = (event) => {};
+
+            for (let i = 0; i < dotsSteps; i++) {
+                ((index) => {
+                    setTimeout(() => {
+                        event.target.nextSibling.classList.toggle("dot_active");
+                        console.log(index);
+                        nextSlide(direction);
+                    }, (timeStep + animationDelay) * index);
+                })(i);
             }
         }
     }
 });
 
 initSlider();
-
-// ---------------------------------------------------------
-// let dots = 4;
-// let sliderElem = document.querySelector(".slider");
-// let dotElems = sliderElem.querySelectorAll(".slider__dot");
-// let indicatorElem = sliderElem.querySelector(".slider__indicator");
-
-// Array.prototype.forEach.call(dotElems, (dotElem) => {
-//     dotElem.addEventListener("click", (e) => {
-//         let currentPos = parseInt(sliderElem.getAttribute("data-pos"));
-//         let newPos = parseInt(dotElem.getAttribute("data-pos"));
-
-//         let newDirection = newPos > currentPos ? "right" : "left";
-//         let currentDirection = newPos < currentPos ? "right" : "left";
-
-//         indicatorElem.classList.remove(
-//             `slider__indicator--${currentDirection}`
-//         );
-//         indicatorElem.classList.add(`slider__indicator--${newDirection}`);
-//         sliderElem.setAttribute("data-pos", newPos);
-//     });
-// });
