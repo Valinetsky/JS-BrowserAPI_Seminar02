@@ -1,6 +1,7 @@
 "use strict";
 const timeStep = 1000;
 const maxElement = 8;
+const middleDot = parseInt(maxElement / 2);
 const images = [];
 
 const dotsFrame = document.querySelector(".slider__dots");
@@ -9,7 +10,6 @@ const dot = (position) => {
     const element = document.createElement("div");
     element.className = "dot";
     element.setAttribute("data-pos", position);
-
     return element;
 };
 
@@ -21,9 +21,10 @@ const frameModulo = (direction) =>
 const arrayAndDotsGenerate = () => {
     for (let index = 0; index < maxElement; index++) {
         images.push(`${index + 1}.jpg`);
-        dotsFrame.appendChild(
-            dot(frameModulo(index - (maxElement - (maxElement % 2)) / 2) + 1)
-        );
+        // dotsFrame.appendChild(
+        //     dot(frameModulo(index - (maxElement - (maxElement % 2)) / 2))
+        // );
+        dotsFrame.appendChild(dot(index));
     }
 };
 
@@ -70,11 +71,17 @@ function animate({ timing, draw, duration, removeElement }) {
             requestAnimationFrame(animate);
         } else {
             removeElement.remove();
+            flag = true;
         }
     });
 }
 
 const nextSlide = (direction) => {
+    // Start here
+    if (!flag) {
+        return;
+    }
+    flag = !flag;
     activeFrame = frameModulo(direction);
     const frameWidth = slider.offsetWidth / frames;
     let currentDiv;
@@ -110,6 +117,36 @@ buttons.addEventListener("click", function (event) {
     if (event.target.classList.contains("btn_right")) {
         console.log("right");
         nextSlide(1);
+    }
+});
+
+const dotsContainer = document.querySelector(".slider__dots");
+dotsContainer.addEventListener("click", function (event) {
+    if (event.target.hasAttribute("data-pos")) {
+        const currentDot = parseInt(event.target.getAttribute("data-pos"));
+        console.log("currentDot");
+        console.log(currentDot);
+        console.log("middleDot");
+        console.log(middleDot);
+        console.log("steps");
+        console.log(currentDot - middleDot);
+        let dotsSteps = currentDot - middleDot;
+        let direction;
+        if (dotsSteps !== 0) {
+            if (dotsSteps < 0) {
+                direction = -1;
+                dotsSteps = -dotsSteps;
+            } else {
+                direction = 1;
+            }
+            for (let index = 0; index < dotsSteps; index++) {
+                addEventListener("finish", (animate) => {
+                    console.log(`Step = ${index}`);
+                    nextSlide(direction);
+                });
+                // onfinish = (event) => {};
+            }
+        }
     }
 });
 

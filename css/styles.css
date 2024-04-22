@@ -186,6 +186,7 @@ body:before {
   background-color: white;
   border: 1px solid red;
   border-radius: 50%;
+  cursor: pointer;
 }
 .dot_active {
   background-color: red;
