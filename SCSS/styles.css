@@ -120,18 +120,35 @@ body:before {
 .dot {
   height: 1vw;
   width: 1vw;
-  background-color: white;
-  border: 1px solid red;
   border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   cursor: pointer;
 }
-.dot_active {
-  background-color: red;
+.dot:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(1.2);
 }
-.dot_active {
-  color: red;
+.dot_middle {
+  cursor: default;
+  background: rgba(255, 255, 255, 0.8);
+}
+.dot_middle:hover {
+  background: rgba(255, 255, 255, 0.8);
+  pointer-events: none;
 }
 
+@keyframes dots {
+  0% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 .btn {
   min-width: 1vw;
   font-family: inherit;
