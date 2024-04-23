@@ -1,5 +1,5 @@
 "use strict";
-const timeStep = 500;
+const timeStep = 1000;
 const animationDelay = 500;
 const maxElement = 9;
 const middleDot = parseInt(maxElement / 2);
@@ -136,6 +136,8 @@ function dotClick(event) {
             } else {
                 direction = 1;
             }
+
+            // Animation parameters
             const dotsTransform = [
                 { transform: "scale(1.5)", background: "white" },
                 { transform: "scale(1)" },
@@ -153,6 +155,8 @@ function dotClick(event) {
                 duration: (timeStep + animationDelay) * (dotsSteps - 1),
                 iterations: 1,
             };
+
+            // Middle dot animation
             const middleDotAnimation = dotsContainer.childNodes[
                 middleDot
             ].animate(dotHide, dotHideTiming, dotListener);
@@ -173,7 +177,7 @@ function dotClick(event) {
 }
 
 function dotListener() {
-    console.log("Add listener");
+    // console.log("Add listener");
     dotsContainer.addEventListener("click", dotClick);
 }
 
