@@ -1,7 +1,7 @@
 "use strict";
-const timeStep = 2000;
+const timeStep = 500;
 const animationDelay = 500;
-const maxElement = 8;
+const maxElement = 9;
 const middleDot = parseInt(maxElement / 2);
 const images = [];
 
@@ -11,6 +11,9 @@ const dot = (position) => {
     const element = document.createElement("div");
     element.className = "dot";
     element.setAttribute("data-pos", position);
+    if (position === middleDot) {
+        element.classList.add("dot_middle");
+    }
     return element;
 };
 
@@ -22,9 +25,6 @@ const frameModulo = (direction) =>
 const arrayAndDotsGenerate = () => {
     for (let index = 0; index < maxElement; index++) {
         images.push(`${index + 1}.jpg`);
-        // dotsFrame.appendChild(
-        //     dot(frameModulo(index - (maxElement - (maxElement % 2)) / 2))
-        // );
         dotsFrame.appendChild(dot(index));
     }
 };
@@ -123,15 +123,10 @@ buttons.addEventListener("click", function (event) {
 
 const dotsContainer = document.querySelector(".slider__dots");
 
-dotsContainer.addEventListener("click", function (event) {
+function dotClick(event) {
     if (event.target.hasAttribute("data-pos")) {
+        dotsContainer.removeEventListener("click", dotClick);
         const currentDot = parseInt(event.target.getAttribute("data-pos"));
-        console.log("currentDot");
-        console.log(currentDot);
-        console.log("middleDot");
-        console.log(middleDot);
-        console.log("steps");
-        console.log(currentDot - middleDot);
         let dotsSteps = currentDot - middleDot;
         let direction;
         if (dotsSteps !== 0) {
@@ -141,18 +136,47 @@ dotsContainer.addEventListener("click", function (event) {
             } else {
                 direction = 1;
             }
+            const dotsTransform = [
+                { transform: "scale(1.5)", background: "white" },
+                { transform: "scale(1)" },
+            ];
+
+            const dotTiming = {
+                duration: timeStep * 0.5,
+                iterations: 1,
+            };
+            const dotHide = [
+                { transform: "scale(1)", background: "none" },
+                { transform: "scale(2)", background: "initial", offset: 1 },
+            ];
+            const dotHideTiming = {
+                duration: (timeStep + animationDelay) * (dotsSteps - 1),
+                iterations: 1,
+            };
+            const middleDotAnimation = dotsContainer.childNodes[
+                middleDot
+            ].animate(dotHide, dotHideTiming, dotListener);
+            middleDotAnimation.onfinish = () => dotListener();
 
             for (let i = 0; i < dotsSteps; i++) {
                 ((index) => {
                     setTimeout(() => {
-                        event.target.nextSibling.classList.toggle("dot_active");
-                        console.log(index);
+                        dotsContainer.childNodes[
+                            currentDot + index * -direction - 1 * direction
+                        ].animate(dotsTransform, dotTiming);
                         nextSlide(direction);
                     }, (timeStep + animationDelay) * index);
                 })(i);
             }
         }
     }
-});
+}
+
+function dotListener() {
+    console.log("Add listener");
+    dotsContainer.addEventListener("click", dotClick);
+}
+
+dotListener();
 
 initSlider();
