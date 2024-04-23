@@ -111,9 +111,13 @@ const nextSlide = (direction) => {
 
 const buttons = document.querySelector(".slider__buttons");
 buttons.addEventListener("click", function (event) {
+    // Start HERE
+    let eventClick = new Event("click");
+    elem.dispatchEvent(eventClick);
     if (event.target.classList.contains("btn_left")) {
         console.log("LEFT");
-        nextSlide(-1);
+        // nextSlide(-1);
+        dotClick(elem, -1);
     }
     if (event.target.classList.contains("btn_right")) {
         console.log("right");
@@ -123,12 +127,12 @@ buttons.addEventListener("click", function (event) {
 
 const dotsContainer = document.querySelector(".slider__dots");
 
-function dotClick(event) {
+function dotClick(event, direction = 0) {
     if (event.target.hasAttribute("data-pos")) {
         dotsContainer.removeEventListener("click", dotClick);
         const currentDot = parseInt(event.target.getAttribute("data-pos"));
         let dotsSteps = currentDot - middleDot;
-        let direction;
+        // let direction;
         if (dotsSteps !== 0) {
             if (dotsSteps < 0) {
                 direction = -1;
