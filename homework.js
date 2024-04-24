@@ -131,6 +131,7 @@ const nextSlide = (direction) => {
     });
 };
 
+// First try. Listen only left and right button
 // const buttons = document.querySelector(".slider__buttons");
 // buttons.addEventListener("click", function (event) {
 //     if (event.target.classList.contains("btn_left")) {
@@ -185,7 +186,6 @@ function frameMove(dotsSteps, direction, currentDot) {
         { transform: "scale(1.5)", background: "white" },
         { transform: "scale(1)" },
     ];
-
     const dotTiming = {
         duration: timeStep * 0.5,
         iterations: 1,
